@@ -18,11 +18,15 @@
 </style>
 {% endblock %}
 <div class="topbar">
-Vendez votre âme et obtenez une promo de -50% sur tout les articles, avant 00h !! &nbsp;<a href="{{ path('app_main') }}" style="color:red;">En profiter !!</a>
+Louez un esclave et obtenez un bonus de +50 Points sur tout les emprunts, avant 00h !! &nbsp;<a href="{{ path('app_main') }}" style="color:red;">En profiter</a>
 </div>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
 <div class="container-fluid">
+    {% if app.user %}
+    <a class="navbar-brand" href="{{ path('app_mainlogged') }}"><img src="{{ asset('img/logo.png') }}" style="width:50%" alt=""></a>
+    {% else %}
     <a class="navbar-brand" href="{{ path('app_main') }}"><img src="{{ asset('img/logo.png') }}" style="width:50%" alt=""></a>
+    {% endif %}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -39,50 +43,55 @@ Vendez votre âme et obtenez une promo de -50% sur tout les articles, avant 00h 
         </li> #}
         </ul>
       <div class="text-end">
-        {# {% if app.user %}
+        {% if app.user %}
             <div class="dropdown d-flex align-items-center">
-                {% if app.user.pictures %}
-                    <img src="{{ asset('uploads/pictures/' ~ app.user.pictures) }}" alt="Photo de profil" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;">
-                {% else %}
-                    <img src="{{ asset('uploads/219986.png') }}" alt="Photo de profil par défaut" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;">
-                {% endif %}
+            <a class="nav-link active" aria-current="page" style="color:blue;" href="#">{{ app.user.points }} LocPoint </a>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <img src="https://attakus.art/wp-content/uploads/2022/10/dark-vador-darth-vader-article-attakus-art.jpg" alt="Photo de profil par défaut" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;">
                 <a href="#" class="nav-link dropdown-toggle" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     Mon Compte
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="#">Mon Profil</a></li>
-                    <li><a class="dropdown-item" href="#">Mes commandes</a></li>
+                    {# <li><a class="dropdown-item" href="#">Mon Profil</a></li>
+                    <li><a class="dropdown-item" href="#">Mes commandes</a></li> #}
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
                 </ul>
             </div>
         {% else %}
-        <a href="{{ path('app_login') }}" class="btn btn-outline-light me-2">Connexion</a>
+        <a href="{{ path('app_login') }}" class="btn btn-success">Connexion</a>
         <a href="{{ path('app_register') }}" class="btn btn-warning">Inscription</a>  
-        {% endif %} #}
+        {% endif %}
       </div>
     </div>
 </div>
 </nav>
 <div class="nav-scroller bg-body shadow-sm">
   <nav class="nav" aria-label="Secondary navigation" style="padding-bottom:10px; padding-top:10px">
+  {% if app.user %}
       <li class="nav-item dropdown" style="margin-left:15px">
           <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Boutique
+            Ma Loc
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="{{ path('app_profile_items') }}">Mes biens</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="{{ path('app_profile_loan') }}">Mes emprunts en cours</a></li>
           </ul>
         </li>
+  {% else %}
+  {% endif %}
     <form class="d-flex" role="search" style="margin-left:15px">
         <input class="form-control me-2" type="search" placeholder="Rechercher un produit..." aria-label="Search">
         {# <button class="btn btn-outline-success" type="submit">Search</button> #}
     </form>
-    <a class="nav-link" href="{{ path('categories_add') }}">Ajouter une catégorie</a>
-    <a class="nav-link" href="{{ path('products_add') }}">Ajouter un produit</a>
+    {% if app.user %}
+    <a class="nav-link" href="{{ path('app_items_add') }}">Proposer un bien</a>
+    {% else %}
+    <a class="nav-link" href="{{ path('app_items') }}">Voir les biens disponible</a>
+    <a class="nav-link" href="{{ path('app_login') }}">Emprunter</a>
+    <a class="nav-link" href="{{ path('app_login') }}">Proposer un bien</a>
+    {% endif %}
   </nav>
 </div>
 <div style="padding-bottom:30px"></div>

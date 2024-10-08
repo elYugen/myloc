@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes emprunts{% endblock %}
+
+{% block body %}
+
+<h1>Mes emprunts</h1>
+
+{% if loans is empty %}
+    <p>tu n'as aucun emprunt</p>
+{% else %}
+    <ul>
+        {% for loan in loans %}
+            <li>
+                objet : {{ loan.getItem.name }} <br>
+                propriétaire : {{ loan.getItem.getOwner.name }} <br>
+                date de début : {{ loan.start_date|date('d/m/Y') }} <br>
+                date de fin : {{ loan.end_date|date('d/m/Y') }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% endblock %}

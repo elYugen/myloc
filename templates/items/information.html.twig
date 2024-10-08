@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ items.name }}{% endblock %}
+
+{% block body %}
+<style>
+    .miniMenu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: -10px;
+    }
+</style>
+<div class="miniMenu">
+    <p>Accueil - Tout les biens - {{ items.name }}</p>
+</div>
+    <section class="row" style="background-color:white; box-shadow:10%; padding-bottom:30px; padding-top:20px; border-radius:5px; margin-right:20px">
+        <div class="col-12">
+            <h1>{{ items.name }}</h1>
+            <hr>
+        </div>
+        <div class="col-3">
+            <div id="carouselExampleIndicators" class="carousel slide">
+                <div class="carousel-indicators">
+                
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="active" aria-current="true" aria-label="1"></button>
+
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                    <img src="{{ asset('/uploads/') ~ items.image }}" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-6">
+            <h4>Catégorie : {{ items.getCategory.name }}</h4>
+            <p>{{ items.description|raw }}</p>
+            {% if app.user %}
+            <a href="{{ path('app_loan', {'id': items.id}) }}" class="btn btn-success">Emprunter</a>
+            {% else %}
+            <a href="{{ path('app_login') }}" class="btn btn-success">Emprunter</a>
+            {% endif %}
+        </div>
+    </section>
+
+
+{% endblock %}

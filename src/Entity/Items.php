@@ -108,6 +108,7 @@ class Items
         return $this;
     }
 
+
     /**
      * @return Collection<int, Loan>
      */
