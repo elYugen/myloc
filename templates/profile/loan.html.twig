@@ -76,6 +76,9 @@
                 <p class="card-text flex-grow-1">{{ loan.getItem.description|raw }}</p>
                 <p>Début de l'emprunt : {{ loan.getStartDate()|date('d/m/Y') }}</p>
                 <p>Date de fin de l'emprunt : {{ loan.getEndDate()|date('d/m/Y') }}</p>
+                <form action="{{ path('app_loan_return', {id: loan.id}) }}" method="post">
+                    <button type="submit" class="btn btn-warning">Rendre</button>
+                </form>
             </div>
         </div>
     </div>

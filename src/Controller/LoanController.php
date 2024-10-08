@@ -38,5 +38,18 @@ class LoanController extends AbstractController
         return $this->redirectToRoute('app_items');
     }
 
+    #[Route('/loan/return/{id}', name: 'app_loan_return', methods: ['POST'])]
+    public function returnLoan(Loan $loan, EntityManagerInterface $entityManager): Response
+    {
+        // verifie si l'utilisateur est le loueur
+        if ($loan->getBorrower() !== $this->getUser()) {
+            throw $this->createAccessDeniedException('tu ne peux pas rendre ça');
+        }
 
+        // suppr l'emprunt
+        $entityManager->remove($loan);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_mainlogged'); 
+    }
 }

@@ -45,7 +45,7 @@ Louez un esclave et obtenez un bonus de +50 Points sur tout les emprunts, avant 
       <div class="text-end">
         {% if app.user %}
             <div class="dropdown d-flex align-items-center">
-            <a class="nav-link active" aria-current="page" style="color:blue;" href="#">{{ app.user.points }} LocPoint </a>
+            <a class="nav-link active" aria-current="page" style="color:blue;" href="#">{% if app.user.points is null %} Aucun {% else %} {{ app.user.points }} {% endif %} LocPoint </a>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <img src="https://attakus.art/wp-content/uploads/2022/10/dark-vador-darth-vader-article-attakus-art.jpg" alt="Photo de profil par défaut" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;">
                 <a href="#" class="nav-link dropdown-toggle" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
