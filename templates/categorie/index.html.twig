@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toutes les catégories{% endblock %}
+
+{% block body %}
+<style>
+    .miniMenu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: -10px;
+    }
+
+    a {
+        text-decoration:none;
+    }
+</style>
+<div class="miniMenu">
+    <p>Accueil - Toutes les catégories</p>
+</div>
+
+<ul class="list-group">
+
+{% for category in category %}
+<a href="{{ path('app_categorie_id', {id: category.id}) }}">
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    {{ category.name }}
+    <span class="badge text-bg-primary rounded-pill">{{ category.itemCount }}</span>
+  </li>
+</a>
+  <br>
+{% endfor %}
+</ul>
+{% endblock %}

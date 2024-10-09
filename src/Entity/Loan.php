@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\LoanRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LoanRepository::class)]
 class Loan
@@ -19,6 +20,7 @@ class Loan
     private ?Items $item = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual('today UTC')]
     private ?\DateTimeInterface $start_date = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -50,6 +52,7 @@ class Loan
         return $this->start_date;
     }
 
+    
     public function setStartDate(\DateTimeInterface $start_date): static
     {
         $this->start_date = $start_date;

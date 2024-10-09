@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}{{ category.name }}{% endblock %}
 
 {% block body %}
+
 <style>
     .miniMenu {
         display: flex;
@@ -48,25 +49,29 @@
 </style>
 
 <div class="miniMenu">
-    <p>Accueil</p>
+    <p>Accueil - Nos catégories - {{ category.name }}</p>
 </div>
+<h1>{{ category.name }} <span class="badge text-bg-secondary">{{ category.itemCount }}</span></h1>
 
 <div class="container">
     <div class="row">
-        {% for items in items %}
+        {% for item in category.items %}
         <div class="col-md-3 mb-4">
             <div class="card h-100">
                 <div class="card-img-container">
-                    <img src="{{ asset('/uploads/') ~ items.image }}" class="card-img-top" alt="{{ items.name }}">
+                    <img src="{{ asset('/uploads/') ~ item.image }}" class="card-img-top" alt="{{ item.name }}">
                 </div>
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{ items.name }}</h5>
-                    <h6>Catégorie : {{ items.getCategory.name }}</h6>
-                    <p class="card-text flex-grow-1">{{ items.description|raw }}</p>
-                    <a href="{{ path('app_items_information', {id: items.id}) }}" class="btn btn-primary mt-auto">Voir plus</a>
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text flex-grow-1">{{ item.description|raw }}</p>
+                    <a href="{{ path('app_items_information', {id: item.id}) }}" class="btn btn-primary mt-auto">Voir plus</a>
                 </div>
             </div>
         </div>
+        {% else %}
+<div class="alert alert-danger" role="alert">
+  Aucun objet dans la catégorie {{ category.name }}
+</div>
         {% endfor %}
     </div>
 </div>

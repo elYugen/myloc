@@ -10,6 +10,10 @@
         align-items: center;
         margin-top: -10px;
     }
+
+    a {
+        text-decoration:none;
+    }
 </style>
 <div class="miniMenu">
     <p>Accueil - Tout les biens - {{ items.name }}</p>
@@ -42,7 +46,7 @@
             </div>
         </div>
         <div class="col-6">
-            <h4>Catégorie : {{ items.getCategory.name }}</h4>
+            <h4>Catégorie : <a href="/categorie/{{ items.getCategory.id }}">{{ items.getCategory.name }}</a></h4>
             <p>{{ items.description|raw }}</p>
             {% if app.user %}
             <a href="{{ path('app_loan', {'id': items.id}) }}" class="btn btn-success">Emprunter</a>

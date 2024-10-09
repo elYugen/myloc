@@ -18,15 +18,11 @@
 </style>
 {% endblock %}
 <div class="topbar">
-Louez un esclave et obtenez un bonus de +50 Points sur tout les emprunts, avant 00h !! &nbsp;<a href="{{ path('app_main') }}" style="color:red;">En profiter</a>
+Louez un objet et obtenez un bonus de +50 Points sur tout les emprunts, avant 00h !! &nbsp;<a href="{{ path('app_main') }}" style="color:red;">En profiter</a>
 </div>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
 <div class="container-fluid">
-    {% if app.user %}
-    <a class="navbar-brand" href="{{ path('app_mainlogged') }}"><img src="{{ asset('img/logo.png') }}" style="width:50%" alt=""></a>
-    {% else %}
     <a class="navbar-brand" href="{{ path('app_main') }}"><img src="{{ asset('img/logo.png') }}" style="width:50%" alt=""></a>
-    {% endif %}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -54,7 +50,6 @@ Louez un esclave et obtenez un bonus de +50 Points sur tout les emprunts, avant 
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                     {# <li><a class="dropdown-item" href="#">Mon Profil</a></li>
                     <li><a class="dropdown-item" href="#">Mes commandes</a></li> #}
-                    <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
                 </ul>
             </div>
@@ -86,9 +81,11 @@ Louez un esclave et obtenez un bonus de +50 Points sur tout les emprunts, avant 
         {# <button class="btn btn-outline-success" type="submit">Search</button> #}
     </form>
     {% if app.user %}
+    <a class="nav-link" href="{{ path('app_categorie') }}">Nos catégories</a>
     <a class="nav-link" href="{{ path('app_items_add') }}">Proposer un bien</a>
     {% else %}
     <a class="nav-link" href="{{ path('app_items') }}">Voir les biens disponible</a>
+    <a class="nav-link" href="{{ path('app_categorie') }}">Nos catégories</a>
     <a class="nav-link" href="{{ path('app_login') }}">Emprunter</a>
     <a class="nav-link" href="{{ path('app_login') }}">Proposer un bien</a>
     {% endif %}

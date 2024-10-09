@@ -1,43 +1,155 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}{% if app.user %}Accueil{% else %} Location et emprunt de bien{% endif %}{% endblock %}
 
 {% block body %}
+{% if app.user %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .miniMenu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: -10px;
+        margin-bottom: 20px;
+    }
+    .card-img-container {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .card {
+        height: 100%;
+        width: 100%; 
+        max-width: 300px;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-text {
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    a {
+        text-decoration:none;
+    }
 </style>
 
-  <div class="card shadow-lg">
-    <div class="card-header bg-primary text-white">
-      <h3 class="card-title">Découvrez les avantages de MyLoc</h3>
-    </div>
-    <div class="card-body">
-      <p>
-        Le prêt de biens matériels est une pratique en plein essor, et la plateforme MyLoc se positionne comme une solution innovante et incontournable pour faciliter ces échanges. Imaginez pouvoir accéder à une multitude d’outils, d’équipements ou de biens de manière simple, économique, et écologique. MyLoc se distingue par son approche centrée sur l'économie collaborative, où le partage devient le maître-mot. Que vous soyez particulier ou professionnel, la plateforme met à votre disposition un large éventail d’articles à louer ou prêter, vous permettant ainsi de répondre à vos besoins ponctuels sans avoir à investir dans des biens coûteux que vous n'utiliserez que rarement.
-      </p>
-      <h2>Une économie pour tous :</h2>
-      <p>Grâce à MyLoc, vous économisez de l’argent. Plutôt que d’acheter un objet que vous utiliserez une seule fois, pourquoi ne pas le louer à quelqu'un qui en dispose déjà ? Cela vous permet non seulement de faire des économies, mais également d’accéder à du matériel de qualité sans vous soucier de son entretien à long terme.</p>
-      <h2>Un modèle écoresponsable :</h2>
-      <p>Le prêt de biens matériels via MyLoc est également un acte écoresponsable. En choisissant de louer plutôt que d’acheter, vous contribuez à la réduction de la surproduction et du gaspillage. Chaque objet loué est un objet de moins à produire, à transporter, et à jeter. MyLoc vous aide ainsi à adopter une démarche plus durable tout en vous offrant la flexibilité dont vous avez besoin pour vos projets personnels ou professionnels.</p>
-      <h2>Un large choix de biens :</h2>
-      <p>Que vous ayez besoin d'outils pour bricoler, d'appareils électroniques, d’équipements sportifs, ou même de matériels pour un événement spécial, MyLoc vous donne accès à une grande variété de biens. Les utilisateurs peuvent facilement parcourir les catégories, lire les avis d’autres emprunteurs, et réserver l’équipement qu’ils recherchent en quelques clics seulement.</p>
-      <h2>Simplicité d’utilisation :</h2>
-      <p>MyLoc a été pensée pour être intuitive et simple d'utilisation. L’inscription est rapide, et en quelques étapes seulement, vous pouvez commencer à prêter ou louer des biens. La plateforme met en relation des propriétaires et des emprunteurs en toute sécurité, avec un système de géolocalisation pour trouver les offres les plus proches de vous. Une fois le bien réservé, tout est organisé pour que l'échange se fasse sans effort, avec des options de remise en main propre ou de livraison.</p>
-      <h2>Un cadre sécurisé et transparent :</h2>
-      <p>Sécurité et confiance sont au cœur de l’expérience MyLoc. La plateforme propose des contrats de location standardisés, ainsi qu’un système d’évaluation qui permet à chacun de se sentir en confiance. Les biens sont couverts par une assurance, garantissant ainsi que chaque transaction se déroule dans les meilleures conditions possibles. De plus, MyLoc vous permet de suivre vos échanges grâce à un tableau de bord clair et précis, pour gérer vos locations ou prêts en toute simplicité.</p>
-      <h2>Une communauté grandissante :</h2>
-      <p>Rejoindre MyLoc, c’est faire partie d’une communauté d'utilisateurs engagés dans une démarche de partage et de solidarité. Les interactions sur la plateforme sont fluides, et chaque utilisateur contribue à enrichir l’expérience de prêt ou de location en partageant ses avis et recommandations.</p>
-      <h2>Flexibilité et disponibilité :</h2>
-      <p>MyLoc s’adapte à vos besoins. Besoin d’un bien en urgence pour un projet de dernière minute ? Pas de problème ! Avec sa flexibilité et la disponibilité des biens dans différentes zones géographiques, vous pouvez trouver ce qu’il vous faut rapidement, et même pour des périodes courtes.</p>
-      <h2>Faciliter le quotidien :</h2>
-      <p>En simplifiant l’accès à des objets divers et variés, MyLoc vous permet de vous concentrer sur ce qui compte vraiment. Besoin d’un bien pour organiser un événement ? Une machine spécifique pour une rénovation ? La plateforme est là pour vous, réduisant les tracas liés à l’acquisition de ces objets et vous offrant une tranquillité d’esprit.
+<div class="miniMenu">
+    <p>Accueil</p>
+</div>
 
-En conclusion, MyLoc transforme la façon dont nous consommons, en favorisant le partage de biens matériels entre particuliers et professionnels. En mettant à disposition une plateforme sécurisée, intuitive et écoresponsable, MyLoc est la solution idéale pour économiser de l’argent, réduire votre empreinte carbone, et accéder aux biens dont vous avez besoin sans engagement à long terme. Pourquoi acheter quand on peut louer ? Découvrez dès maintenant les avantages de MyLoc et rejoignez une communauté qui réinvente la consommation !</p>
+<div class="container">
+    <div class="row">
+        {% for items in items %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <div class="card-img-container">
+                    <img src="{{ asset('/uploads/') ~ items.image }}" class="card-img-top" alt="{{ items.name }}">
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ items.name }}</h5>
+                    <h6>Catégorie : <a href="/categorie/{{ items.getCategory.id }}">{{ items.getCategory.name }}</a></h6>
+                    <p class="card-text flex-grow-1">{{ items.description|raw }}</p>
+                    <a href="{{ path('app_items_information', {id: items.id}) }}" class="btn btn-primary mt-auto">Voir plus</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    <div class="card-footer text-muted">
-      Rejoignez la communauté MyLoc dès aujourd'hui !
-    </div>
-  </div>
-  <div style="padding-bottom:15px;"></div>
+</div>
+{% else %}
+<div class="container my-5">
+      <!-- Hero section -->
+      <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Découvrez les avantages de MyLoc</h1>
+        <p class="lead mb-4">
+          MyLoc est une plateforme innovante qui facilite le prêt de biens matériels, offrant une solution économique, écologique et collaborative pour tous vos besoins.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <a href="{{ path('app_login')}}" type="button" class="btn btn-primary btn-lg px-4 gap-3">Commencer</a>
+        </div>
+      </div>
+
+      <!-- Feature section -->
+      <h2 class="pb-2 border-bottom">Pourquoi choisir MyLoc ?</h2>
+      <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="feature col">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"/></svg>
+          </div>
+          <h3 class="fs-2 text-body-emphasis">Économique</h3>
+          <p>Économisez de l'argent en louant plutôt qu'en achetant des objets que vous n'utiliserez que rarement.</p>
+        </div>
+        <div class="feature col">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"/></svg>
+          </div>
+          <h3 class="fs-2 text-body-emphasis">Écologique</h3>
+          <p>Contribuez à la réduction de la surproduction et du gaspillage en adoptant une démarche de partage.</p>
+        </div>
+        <div class="feature col">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
+          </div>
+          <h3 class="fs-2 text-body-emphasis">Flexible</h3>
+          <p>Accédez à une grande variété de biens pour tous vos besoins, personnels ou professionnels.</p>
+        </div>
+      </div>
+
+      <!-- Jumbotron-style section -->
+      <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <h1 class="display-5 fw-bold">Une communauté grandissante</h1>
+        <p class="col-md-8 fs-4">Rejoignez MyLoc et faites partie d'une communauté d'utilisateurs engagés dans une démarche de partage et de solidarité. Profitez d'un large choix de biens, d'un cadre sécurisé et d'une expérience utilisateur optimale.</p>
+        <a href="{{ path('app_login')}}" class="btn btn-primary btn-lg" type="button">Rejoindre la communauté</a>
+      </div>
+
+      <!-- Additional content in cards -->
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Simplicité d'utilisation</h5>
+              <p class="card-text">MyLoc a été conçue pour être intuitive. L'inscription est rapide, et en quelques étapes, vous pouvez commencer à prêter ou louer des biens.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Sécurité et transparence</h5>
+              <p class="card-text">Profitez de contrats standardisés, d'un système d'évaluation fiable et d'une assurance pour chaque transaction.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to action -->
+      <div class="mt-5 p-5 bg-primary text-white rounded">
+        <h2>Prêt à transformer votre façon de consommer ?</h2>
+        <p>Rejoignez MyLoc dès aujourd'hui et découvrez une nouvelle façon de partager et d'accéder aux biens dont vous avez besoin.</p>
+        <a href="{{ path('app_register')}}" class="btn btn-light">S'inscrire maintenant</a>
+      </div>
+
+</div> 
+
+<div style="padding-bottom:20px;"></div>
+{% endif %}
 {% endblock %}

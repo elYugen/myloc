@@ -11,17 +11,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'app_main')]
-    public function index(): Response
-    {
-        return $this->render('main/index.html.twig');
-    }
-
-    #[Route('/main', name: 'app_mainlogged')]
-    public function indexLogged(ItemsRepository $itemsRepository): Response
+    public function index(ItemsRepository $itemsRepository): Response
     {
         $items = $itemsRepository->findAll();
-
-        return $this->render('main/islogged.html.twig', [
+        return $this->render('main/index.html.twig', [
             'items' => $items,
         ]);
     }

@@ -71,6 +71,11 @@
                     <h6>Catégorie : {{ items.getCategory.name }}</h6>
                     <p class="card-text flex-grow-1">{{ items.description|raw }}</p>
                     <a href="{{ path('app_items_information', {id: items.id}) }}" class="btn btn-primary mt-auto">Voir plus</a>
+                    <a href="{{ path('app_items_edit', {id: items.id}) }}" class="btn btn-warning" style="margin-top:10px">Modifier mon objet</a>
+                    <form method="post" style="margin-top:10px" action="{{ path('app_items_delete', {'id': items.id}) }}" onsubmit="return confirm('tu es sur de vouloir supprimé ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ items.id) }}">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
                 </div>
             </div>
         </div>

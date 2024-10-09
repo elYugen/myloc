@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier {{ item.name }}{% endblock %}
+
+{% block body %}
+<style>
+    .miniMenu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: -10px;
+    }
+</style>
+
+<div class="miniMenu">
+    <p>Accueil - Modifier {{ item.name }}</p>
+</div>
+{% if app.user == items.owner %}
+   <div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h1 class="card-title">Modifier l'objet {{ item.name }}</h1>
+        </div>
+        <div class="card-body">
+        <form method="post" action="{{ path('app_items_delete', {'id': items.id}) }}" onsubmit="return confirm('tu es sur de vouloir supprimé ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ items.id) }}">
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+        </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>      
+{% endif %}
+ 
+
+
+{% endblock %}

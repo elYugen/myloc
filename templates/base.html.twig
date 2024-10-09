@@ -9,12 +9,22 @@
         {% block stylesheets %}
         {% endblock %}
 
+    {# <script>
+    document.onreadystatechange = function () {
+        if (document.readyState === 'complete') {
+            setTimeout(function () {
+                document.getElementById('loading').style.display = 'none';
+            }, 1000);
+        }
+    }
+    </script> #}
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
     <body>
     {% include('_partials/_navbar.html.twig') %}
+    {# {% include('_partials/_loading.html.twig') %} #}
     <main class="container">
         {% block body %}{% endblock %}
     </main>

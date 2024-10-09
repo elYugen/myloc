@@ -90,4 +90,9 @@ class Categories
 
         return $this;
     }
+
+    public function getItemCount(): int
+    {
+    return $this->items->count();
+    }
 }

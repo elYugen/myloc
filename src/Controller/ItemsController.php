@@ -52,7 +52,7 @@ class ItemsController extends AbstractController
             $entityManager->persist($item);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_mainlogged');
+            return $this->redirectToRoute('app_main');
         }
         return $this->render('items/add.html.twig', [
             'form' => $form,
@@ -67,5 +67,66 @@ class ItemsController extends AbstractController
         return $this->render('items/information.html.twig', [
             'items' => $items,
         ]);
+    }
+
+    #[Route('/items/edit/{id}', name: 'app_items_edit')]
+    public function edit(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, Items $item, #[Autowire('%kernel.project_dir%/public/uploads/')] string $imageDirectory): Response
+    {
+        $form = $this->createForm(ItemsFormType::class, $item);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('image')->getData();
+            if ($image) {
+                $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFileName = $slugger->slug($originalFileName);
+                $newFileName = $safeFileName.'-'.uniqid().'.'.$image->guessExtension();
+
+                try {
+                    $image->move($imageDirectory, $newFileName);
+                    if ($item->getImage()) {
+                        unlink($imageDirectory.'/'.$item->getImage());
+                    }
+                    $item->setImage($newFileName);
+                } catch (FileException $e) {
+                }
+            }
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'L\'objet a été modifié avec succès.');
+            return $this->redirectToRoute('app_items_information', ['id' => $item->getId()]);
+        }
+
+        return $this->render('items/edit.html.twig', [
+            'form' => $form->createView(),
+            'item' => $item,
+        ]);
+    }
+
+    #[Route('/items/delete/{id}', name: 'app_items_delete')]
+    public function delete(Request $request, Items $item, EntityManagerInterface $entityManager, #[Autowire('%kernel.project_dir%/public/uploads/')] string $imageDirectory): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$item->getId(), $request->request->get('_token'))) {
+            if ($this->getUser() === $item->getOwner()) {
+                if ($item->getImage()) {
+                    $imagePath = $imageDirectory.'/'.$item->getImage();
+                    if (file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                }
+
+                $entityManager->remove($item);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'L\'objet a été supprimé avec succès.');
+            } else {
+                $this->addFlash('error', 'Vous n\'êtes pas autorisé à supprimer cet objet.');
+            }
+        } else {
+            $this->addFlash('error', 'Token CSRF invalide.');
+        }
+
+        return $this->redirectToRoute('app_items');
     }
 }
